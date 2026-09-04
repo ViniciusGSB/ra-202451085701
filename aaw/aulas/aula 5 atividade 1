@@ -1,0 +1,61 @@
+CENÁRIO 01 – TechStore
+
+Modelo recomendado: Documento
+
+Justificativa:
+
+Cada produto tem características diferentes, então um banco de documentos é mais flexível.
+Novos atributos podem ser adicionados sem precisar alterar tabelas toda hora.
+O produto geralmente é carregado completo na página, o que funciona bem nesse modelo.
+
+Principal risco da escolha:
+
+Fazer relatórios comparando várias categorias diferentes pode ser mais difícil.
+CENÁRIO 02 – MegaCart
+
+Modelo recomendado: Chave-valor
+
+Justificativa:
+
+O acesso sempre é feito pela chave do cliente, então esse modelo atende muito bem.
+Ele consegue lidar com muitas leituras e escritas ao mesmo tempo.
+Também suporta TTL, fazendo o carrinho expirar automaticamente.
+
+Principal risco da escolha:
+
+Não é muito bom para consultas complexas ou filtros.
+CENÁRIO 03 – PayBank
+
+Modelo recomendado: Relacional
+
+Justificativa:
+
+As transferências precisam acontecer de forma segura, sem risco de um valor ser debitado e não creditado.
+O banco exige consistência dos dados por questões legais.
+Os relatórios usam muitos relacionamentos e joins.
+
+Principal risco da escolha:
+
+Pode ser mais difícil escalar quando o sistema crescer muito.
+CENÁRIO 04 – FriendLink
+
+Modelo recomendado: Grafo
+
+Justificativa:
+
+As consultas são baseadas em conexões entre pessoas.
+O principal valor da aplicação está nos relacionamentos.
+Bancos de grafos são feitos justamente para navegar entre essas conexões.
+
+Principal risco da escolha:
+
+A administração e a escalabilidade podem ficar mais complexas conforme a rede cresce.
+DESAFIO
+
+Escolhi o cenário do PayBank.
+
+Se a rede for dividida, eu acho que o sistema deve parar temporariamente algumas operações para evitar erros nos saldos. Nesse caso, é melhor sacrificar a Disponibilidade (A) e manter a Consistência (C).
+
+Isso porque, em um banco, um saldo errado pode causar muitos problemas. É melhor o cliente esperar alguns instantes do que o dinheiro sumir ou ser duplicado por causa de dados inconsistentes.
+
+Resposta: O PayBank deve priorizar Consistência e Tolerância à Partição (CP) e abrir mão da Disponibilidade (A) quando houver partição na rede.
